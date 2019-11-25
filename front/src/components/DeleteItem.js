@@ -9,7 +9,7 @@ const MyVerticallyCenteredModal = props => {
   const itemPrice = props.itemPrice;
   const handleSubmit = event => {
     event.preventDefault();
-    axios.delete(`http://localhost:8000/item/${itemId}`).then(res => {
+    axios.delete(`http://150.95.139.104:8000/item/${itemId}`).then(res => {
       props.view();
     });
   };
@@ -22,14 +22,14 @@ const MyVerticallyCenteredModal = props => {
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title>アイテムを消去</Modal.Title>
+        <Modal.Title>費目を消去</Modal.Title>
       </Modal.Header>
       <form onSubmit={handleSubmit}>
         <Modal.Body>
-          <p>以下のアイテムが消去されます</p>
-          <div>タスク番号: {props.itemIndex}</div>
-          <div>内容: {itemContent}</div>
-          <div>締め切り: {itemPrime}</div>
+          <p>以下の費目が消去されます</p>
+          <div>番号: {props.itemIndex}</div>
+          <div>費目: {itemContent}</div>
+          <div>金額: {itemPrice}</div>
         </Modal.Body>
         <Modal.Footer>
           <Button type="submit" onClick={props.onHide}>
@@ -68,3 +68,4 @@ const DeleteItem = props => {
 };
 
 export default DeleteItem;
+

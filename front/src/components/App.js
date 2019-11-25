@@ -1,5 +1,4 @@
 import React from "react";
-import moment from "moment";
 import axios from "axios";
 import "../style/App.scss";
 import { Container, Row, Col, Card } from "react-bootstrap";
@@ -16,11 +15,11 @@ export default class App extends React.Component {
     };
   }
   componentDidMount() {
-    axios.get("http://localhost:8000/item/").then(res => {
+    axios.get("http://150.95.139.104:8000/item/").then(res => {
       const items = res.data;
       if (items !== null) {
         items.sort((a, b) => {
-          return a.Price.localeCompare(b.Price);
+          return (a.Price - '0') - (b.Price - '0');
         });
       }
       this.setState({ items });
@@ -62,14 +61,6 @@ export default class App extends React.Component {
 }
 
 const CardContents = props => {
-  const handleCheckById = i => {
-    let textStyle = document.getElementById(i).style.textDecoration;
-    if (textStyle === "") {
-      document.getElementById(i).style.textDecoration = "line-through";
-    } else {
-      document.getElementById(i).style.textDecoration = "";
-    }
-  };
   const itemIsNull = props.itemIsNull;
   if (itemIsNull) {
     return (
@@ -89,13 +80,11 @@ const CardContents = props => {
           <Card.Body>
             {props.items.map(item => (
               <div key={item.Id}>
-                <div className="main__card__inner-first">
+                <div className="main__card__inner-second">
                   <span id={item.Id}>
                     {props.items.indexOf(item) + 1}: {item.Content}
                   </span>
-                </div>
-                <div className="main__card__inner-second">
-                  <span>~{item.Price}</span>
+                  <span>¥{item.Price}</span>
                   <span>
                     <UpdateItem
                       itemId={item.Id}
@@ -104,17 +93,6 @@ const CardContents = props => {
                       itemPrice={item.Price}
                       view={props.view}
                     />
-                  </span>
-                  <span>
-                    <button
-                      type="button"
-                      className="btn-icon"
-                      onClick={() => {
-                        handleCheckById(item.Id);
-                      }}
-                    >
-                      <i className="fa fa-check" aria-hidden="true"></i>
-                    </button>
                   </span>
                   <span>
                     <DeleteItem
@@ -135,3 +113,4 @@ const CardContents = props => {
     </Row>
   );
 };
+

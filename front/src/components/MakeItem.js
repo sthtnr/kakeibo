@@ -1,20 +1,17 @@
 import React from "react";
-import moment from "moment";
-import TimePicker from "rc-time-picker";
 import axios from "axios";
 import "../style/App.scss";
 import "../style/MakeItem.scss";
-import "rc-time-picker/assets/index.css";
 import { Button, Modal } from "react-bootstrap";
 
 const MyVerticallyCenteredModal = props => {
   const [content, setContent] = React.useState(null);
-  const [price, setPrice] = React.useState("00:00");
+  const [price, setPrice] = React.useState("0");
   const handleContentChange = event => {
     setContent(event.target.value);
   };
   const handlePriceChange = event => {
-    setPrice(event.format("HH:mm"));
+    setPrice(event.target.value);
   };
   const handleSubmit = event => {
     event.preventDefault();
@@ -22,7 +19,7 @@ const MyVerticallyCenteredModal = props => {
       content: content,
       price: price
     };
-    axios.post("http://localhost:8000/item/", requestData).then(res => {
+    axios.post("http://150.95.139.104:8000/item/", requestData).then(res => {
       props.view();
     });
   };
@@ -35,28 +32,21 @@ const MyVerticallyCenteredModal = props => {
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title>新しくアイテムを作成</Modal.Title>
+        <Modal.Title>新しく費目を作成</Modal.Title>
       </Modal.Header>
       <form onSubmit={handleSubmit}>
         <Modal.Body>
           <div className="control">
-            <label htmlFor="itemnumber">タスク番号</label>
+            <label htmlFor="itemnumber">番号</label>
             {props.itemNextNumber}
           </div>
           <div className="control">
-            <label htmlFor="content">内容</label>
+            <label htmlFor="content">費目</label>
             <textarea id="content" onChange={handleContentChange} />
           </div>
           <div className="control">
-            <label htmlFor="price">締め切り</label>
-            <TimePicker
-              defaultValue={moment("00:00", "HH:mm")}
-              showSecond={false}
-              allowEmpty={false}
-              minuteStep={5}
-              id="price"
-              onChange={handlePriceChange}
-            />
+            <label htmlFor="price">金額</label>
+            ¥ <input id="price" type="number" min="0" max="2147483647" onChange={handlePriceChange} />
           </div>
         </Modal.Body>
         <Modal.Footer>
@@ -93,3 +83,4 @@ const MakeItem = props => {
 };
 
 export default MakeItem;
+

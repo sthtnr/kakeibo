@@ -6,7 +6,7 @@ import { Button, Modal } from "react-bootstrap";
 const MyVerticallyCenteredModal = props => {
   const handleSubmit = event => {
     event.preventDefault();
-    axios.delete("http://localhost:8000/item/").then(res => {
+    axios.delete("http://150.95.139.104:8000/item/").then(res => {
       props.view();
     });
   };
@@ -19,10 +19,10 @@ const MyVerticallyCenteredModal = props => {
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title>全てのアイテムを消去</Modal.Title>
+        <Modal.Title>全ての費目を消去</Modal.Title>
       </Modal.Header>
       <form onSubmit={handleSubmit}>
-        <Modal.Body>全てのアイテムが消去されます</Modal.Body>
+        <Modal.Body>全ての費目が消去されます</Modal.Body>
         <Modal.Footer>
           <Button variant="danger" type="submit" onClick={props.onHide}>
             全て消去
@@ -56,3 +56,4 @@ const DeleteAllItems = props => {
 };
 
 export default DeleteAllItems;
+

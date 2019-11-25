@@ -68,7 +68,7 @@ func GetItems_z() []Kakeibo_table {
 	if err != nil {
 		panic(err)
 	}
-	sqlStatement := `SELECT Id, Content,
+	sqlStatement := `SELECT Id, Content, Price
 									FROM kakeibo_table;`
 	var items []Kakeibo_table
 	rows, err := db.Query(sqlStatement)

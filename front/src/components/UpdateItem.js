@@ -1,6 +1,4 @@
 import React from "react";
-import moment from "moment";
-import TimePicker from "rc-time-picker";
 import axios from "axios";
 import "../style/App.scss";
 import "../style/MakeItem.scss";
@@ -16,7 +14,7 @@ const MyVerticallyCenteredModal = props => {
     setContent(event.target.value);
   };
   const handlePriceChange = event => {
-    setPrice(event.format("HH:mm"));
+    setPrice(event.target.value);
   };
   const handleSubmit = event => {
     event.preventDefault();
@@ -24,7 +22,7 @@ const MyVerticallyCenteredModal = props => {
       content: Content,
       price: Price
     };
-    axios.put(`http://localhost:8000/item/${itemId}`, requestData).then(res => {
+    axios.put(`http://150.95.139.104:8000/item/${itemId}`, requestData).then(res => {
       props.view();
     });
   };
@@ -37,16 +35,16 @@ const MyVerticallyCenteredModal = props => {
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title>アイテムを変更</Modal.Title>
+        <Modal.Title>費目を変更</Modal.Title>
       </Modal.Header>
       <form onSubmit={handleSubmit}>
         <Modal.Body>
           <div className="control">
-            <label htmlFor="itemnumber">アイテム番号</label>
+            <label htmlFor="itemnumber">番号</label>
             {props.itemIndex}
           </div>
           <div className="control">
-            <label htmlFor="content">内容</label>
+            <label htmlFor="content">費目</label>
             <textarea
               id="content"
               placeholder={itemContent}
@@ -54,15 +52,8 @@ const MyVerticallyCenteredModal = props => {
             />
           </div>
           <div className="control">
-            <label htmlFor="price">料金</label>
-            <TimePicker
-              defaultValue={moment(itemPrice, "HH:mm")}
-              showSecond={false}
-              allowEmpty={false}
-              minuteStep={5}
-              id="price"
-              onChange={handlePriceChange}
-            />
+            <label htmlFor="price">金額</label>
+            ¥ <input id="price" placeholder={itemPrice} type="number" min="0" max="2147483647" onChange={handlePriceChange} />
           </div>
         </Modal.Body>
         <Modal.Footer>
@@ -100,3 +91,4 @@ const UpdateItem = props => {
 };
 
 export default UpdateItem;
+
